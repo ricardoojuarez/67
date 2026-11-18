@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Tarjetas - Películas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a class="brand" href="index.html">Tarjetas</a>
+        <div class="nav-links">
+            <a class="active" href="peliculas.html">Películas</a>
+            <a href="series.html">Series</a>
+            <a href="musica.html">Música</a>
+        </div>
+    </nav>
+
+    <main class="contenedor">
+        <h1>Tarjeta de película</h1>
+        <div class="formulario">
+            <input type="text" id="titulo" placeholder="Título">
+            <input type="number" id="anio" placeholder="Año de estreno">
+            <input type="text" id="director" placeholder="Director">
+            <input type="text" id="empresa" placeholder="Empresa">
+            <input type="text" id="genero" placeholder="Género">
+            <input type="text" id="duracion" placeholder="Duración (ej. 2 h 10 min)">
+            <input type="url" id="imagen" placeholder="URL de imagen">
+            <button id="generar" type="button">Generar tarjeta</button>
+        </div>
+        <div class="tarjetas" id="contenedor"></div>
+    </main>
+
+    <footer>Ricardo Juarez 67</footer>
+    <script src="tarjetas.js"></script>
+    <script>
+        document.getElementById("generar").addEventListener("click", function () {
+            const valores = ["titulo", "anio", "director", "empresa", "genero", "duracion", "imagen"]
+                .map(function (id) { return document.getElementById(id).value.trim(); });
+
+            if (!valores[0]) {
+                alert("Escribe al menos el título.");
+                return;
+            }
+
+            const tarjeta = document.createElement("article");
+            tarjeta.className = "tarjeta";
+
+            const img = document.createElement("img");
+            img.src = valores[6] || "https://picsum.photos/seed/pelicula/400/560";
+            img.alt = valores[0];
+
+            const info = document.createElement("div");
+            info.className = "info";
+            const nombre = document.createElement("h2");
+            nombre.textContent = valores[0];
+            info.appendChild(nombre);
+
+            const etiquetas = ["Año", "Director", "Empresa", "Género", "Duración"];
+            for (let i = 0; i < etiquetas.length; i++) {
+                if (valores[i + 1]) {
+                    const linea = document.createElement("p");
+                    linea.textContent = etiquetas[i] + ": " + valores[i + 1];
+                    info.appendChild(linea);
+                }
+            }
+
+            tarjeta.appendChild(img);
+            tarjeta.appendChild(info);
+            prepararTarjeta(tarjeta, valores[0], valores[6] || img.src,
+                ["Año: " + valores[1], "Director: " + valores[2], "Empresa: " + valores[3],
+                 "Género: " + valores[4], "Duración: " + valores[5]]);
+            document.getElementById("contenedor").prepend(tarjeta);
+        });
+    </script>
+</body>
+</html>

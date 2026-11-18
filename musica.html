@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Tarjetas - Música</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a class="brand" href="index.html">Tarjetas</a>
+        <div class="nav-links">
+            <a href="peliculas.html">Películas</a>
+            <a href="series.html">Series</a>
+            <a class="active" href="musica.html">Música</a>
+        </div>
+    </nav>
+
+    <main class="contenedor">
+        <h1>Tarjeta de música</h1>
+        <div class="formulario">
+            <input type="text" id="titulo" placeholder="Título">
+            <input type="text" id="autor" placeholder="Autor">
+            <input type="number" id="anio" placeholder="Año de estreno">
+            <input type="text" id="album" placeholder="Álbum">
+            <input type="text" id="duracion" placeholder="Duración (ej. 3:45)">
+            <input type="url" id="imagen" placeholder="URL de imagen">
+            <button id="generar" type="button">Generar tarjeta</button>
+        </div>
+        <div class="tarjetas" id="contenedor"></div>
+    </main>
+
+    <footer>Ricardo Juarez 67</footer>
+    <script src="tarjetas.js"></script>
+    <script>
+        document.getElementById("generar").addEventListener("click", function () {
+            const ids = ["titulo", "autor", "anio", "album", "duracion", "imagen"];
+            const valores = ids.map(function (id) { return document.getElementById(id).value.trim(); });
+            if (!valores[0]) {
+                alert("Escribe al menos el título.");
+                return;
+            }
+
+            const tarjeta = document.createElement("article");
+            tarjeta.className = "tarjeta";
+            const img = document.createElement("img");
+            img.src = valores[5] || "https://picsum.photos/seed/musica/400/560";
+            img.alt = valores[0];
+
+            const info = document.createElement("div");
+            info.className = "info";
+            const nombre = document.createElement("h2");
+            nombre.textContent = valores[0];
+            info.appendChild(nombre);
+
+            const etiquetas = ["Autor", "Año", "Álbum", "Duración"];
+            for (let i = 0; i < etiquetas.length; i++) {
+                if (valores[i + 1]) {
+                    const linea = document.createElement("p");
+                    linea.textContent = etiquetas[i] + ": " + valores[i + 1];
+                    info.appendChild(linea);
+                }
+            }
+
+            tarjeta.appendChild(img);
+            tarjeta.appendChild(info);
+            prepararTarjeta(tarjeta, valores[0], valores[5] || img.src,
+                ["Autor: " + valores[1], "Año: " + valores[2], "Álbum: " + valores[3],
+                 "Duración: " + valores[4]]);
+            document.getElementById("contenedor").prepend(tarjeta);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarjetas - Inicio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a class="brand" href="index.html"><span>TC</span> Tarjetas</a>
+        <div class="nav-links">
+            <a class="active" href="index.html">Inicio</a>
+            <a href="peliculas.html">Películas</a>
+            <a href="series.html">Series</a>
+            <a href="musica.html">Música</a>
+        </div>
+    </nav>
+
+    <main class="contenedor inicio">
+        <section class="hero">
+            <div class="hero-texto">
+                <p class="etiqueta">Crea, personaliza y descarga</p>
+                <h1>Generador de tarjetas</h1>
+                <p class="descripcion">Diseña tarjetas simples y modernas para tus películas, series y canciones favoritas.</p>
+                <div class="acciones">
+                    <a class="boton-principal" href="peliculas.html">Crear ahora</a>
+                    <a class="boton-secundario" href="#ejemplos">Ver ejemplos</a>
+                </div>
+            </div>
+            <div class="hero-imagen">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNdt26Xu1S_oBNIHZIEmwzU2KTDueL7zd78cX4U1FL1A&s=10" alt="Ejemplo de tarjeta multimedia">
+            </div>
+        </section>
+
+        <section class="tutorial">
+            <div>
+                <p class="etiqueta">Guía rápida</p>
+                <h2>Cómo usarlo</h2>
+            </div>
+            <ol>
+                <li><span>1</span> Elige una categoría.</li>
+                <li><span>2</span> Completa los datos.</li>
+                <li><span>3</span> Agrega una imagen.</li>
+                <li><span>4</span> Genera y descarga.</li>
+            </ol>
+        </section>
+
+        <section class="seccion-ejemplos" id="ejemplos">
+            <div class="titulo-seccion">
+                <p class="etiqueta">Inspiración</p>
+                <h2>Ejemplos disponibles</h2>
+            </div>
+            <div class="carrusel">
+                <button type="button" id="anterior" aria-label="Anterior">←</button>
+                <article class="tarjeta ejemplo" id="ejemplo"></article>
+                <button type="button" id="siguiente" aria-label="Siguiente">→</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <strong>Desarrollador: Ricardo Juarez 67</strong>
+        <span>Ayudado por Yahel Avecilla</span>
+    </footer>
+
+    <script>
+        const ejemplos = [
+            {
+                tipo: "Película",
+                titulo: "El sueño se cumplio",
+                imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbuW5ZsbXCylhtGgYvJtuX6X_X4eDHiHHY1ci-OAYXig&s=10",
+                datos: [
+                    "Año: 2024",
+                    "Director: Ortiz Alonso",
+                    "Empresa: Horizonte Films",
+                    "Género: Ciencia ficción",
+                    "Duración: 2.56"
+                ]
+            },
+            {
+                tipo: "Serie",
+                titulo: "Invincible",
+                imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaDTD6aWOLxbmK7VQiqf1_7iB0VXfsupBlQCZ7onKJ3Q&s=10",
+                datos: [
+                    "Año de estreno: 2021",
+                    "Director: Robert Kirkman",
+                    "Empresa: Amazon Studios",
+                    "Género: Animación y superhéroes",
+                    "Temporadas: 3",
+                    "Capítulos: 24"
+                ]
+            },
+            {
+                tipo: "Música",
+                titulo: "Cielo azul",
+                imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGPCaxcm-AWDBzcm8jjt3pSDTOFQk20yPCP0uMmASLGQ&s=10",
+                datos: [
+                    "Autor: Rey Quinto",
+                    "Año de estreno: 2024",
+                    "Álbum: Horizonte",
+                    "Duración: 2.67 minutos"
+                ]
+            }
+        ];
+        let indice = 0;
+
+        function mostrarEjemplo() {
+            const ejemplo = ejemplos[indice];
+            const tarjeta = document.getElementById("ejemplo");
+            tarjeta.innerHTML =
+                "<img src='" + ejemplo.imagen + "' alt='" + ejemplo.titulo + "'>" +
+                "<div class='info'>" +
+                "<p class='tipo-ejemplo'>" + ejemplo.tipo + "</p>" +
+                "<h2>" + ejemplo.titulo + "</h2>" +
+                "<div class='lista-datos'>" + ejemplo.datos.map(function (dato) {
+                    const partes = dato.split(": ");
+                    return "<p><strong>" + partes[0] + ":</strong> " + partes.slice(1).join(": ") + "</p>";
+                }).join("") + "</div></div>";
+        }
+
+        document.getElementById("anterior").addEventListener("click", function () {
+            indice = (indice - 1 + ejemplos.length) % ejemplos.length;
+            mostrarEjemplo();
+        });
+
+        document.getElementById("siguiente").addEventListener("click", function () {
+            indice = (indice + 1) % ejemplos.length;
+            mostrarEjemplo();
+        });
+
+        mostrarEjemplo();
+    </script>
+</body>
+</html>
